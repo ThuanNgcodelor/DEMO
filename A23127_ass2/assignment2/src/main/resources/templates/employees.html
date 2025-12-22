@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Employee Payroll Management</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h2>Employee Form</h2>
+    <form th:action="@{/employees/save}" th:object="${employee}" method="post">
+        <input type="hidden" th:field="*{employeeID}" />
+
+        Full Name: <input type="text" th:field="*{fullName}" />
+        <span th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></span><br/>
+
+        Position: <input type="text" th:field="*{position}" />
+        <span th:if="${#fields.hasErrors('position')}" th:errors="*{position}"></span><br/>
+
+        Date of Birth: <input type="date" th:field="*{dateOfBirth}" />
+        <span th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></span><br/>
+
+        Salary: <input type="number" step="0.01" th:field="*{salary}" />
+        <span th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></span><br/>
+
+        Hire Date: <input type="date" th:field="*{hireDate}" />
+        <span th:if="${#fields.hasErrors('hireDate')}" th:errors="*{hireDate}"></span><br/>
+
+        <button type="submit">Save</button>
+    </form>
+
+    <h3>Search Employees</h3>
+    <form th:action="@{/employees/search}" method="post">
+        Full Name: <input type="text" name="fullName"/>
+        Position: <input type="text" name="position"/>
+        Salary From: <input type="number" step="0.01" name="minSalary"/>
+        To: <input type="number" step="0.01" name="maxSalary"/>
+        <button type="submit">Search</button>
+    </form>
+
+    <h3>Employee List</h3>
+    <table border="1">
+        <tr>
+            <th>ID</th><th>Full Name</th><th>Position</th>
+            <th>Date of Birth</th><th>Salary</th><th>Hire Date</th><th>Actions</th>
+        </tr>
+        <tr th:each="e : ${list}">
+            <td th:text="${e.employeeID}"></td>
+            <td th:text="${e.fullName}"></td>
+            <td th:text="${e.position}"></td>
+            <td th:text="${e.dateOfBirth}"></td>
+            <td th:text="${e.salary}"></td>
+            <td th:text="${e.hireDate}"></td>
+            <td>
+                <a th:href="@{/employees/edit/{id}(id=${e.employeeID})}">Edit</a> |
+                <a th:href="@{/employees/delete/{id}(id=${e.employeeID})}"
+                   onclick="return confirm('Are you sure you want to delete this employee?')">Delete</a>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

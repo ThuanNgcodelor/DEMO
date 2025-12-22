@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{_layout :: content(~{::section})}">
+<section>
+    <h2 th:text="${mode=='edit' ? 'Edit Employee' : 'Add Employee'}"></h2>
+
+    <form th:action="@{${formAction}}"
+          method="post"
+          th:object="${employee}"
+          class="row g-3 needs-validation" novalidate>
+
+        <div class="col-md-4">
+            <label class="form-label">Emp ID</label>
+            <input type="text" class="form-control" th:field="*{empId}"
+                   th:readonly="${mode=='edit'}" required minlength="4" maxlength="4">
+            <div class="error" th:if="${#fields.hasErrors('empId')}" th:errors="*{empId}"></div>
+        </div>
+
+        <div class="col-md-8">
+            <label class="form-label">Emp Name</label>
+            <input type="text" class="form-control" th:field="*{empName}" required>
+            <div class="error" th:if="${#fields.hasErrors('empName')}" th:errors="*{empName}"></div>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Phone</label>
+            <input type="text" class="form-control" th:field="*{phone}" required>
+            <div class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Birthday (dd/mm/yyyy)</label>
+            <input type="text" class="form-control" th:field="*{birthday}"
+                   placeholder="dd/mm/yyyy" required>
+            <div class="error" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></div>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Salary (USD)</label>
+            <input type="number" class="form-control" th:field="*{salary}" min="500" step="0.01" required>
+            <div class="error" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></div>
+        </div>
+
+        <div class="col-12 d-flex gap-2">
+            <button type="submit" class="btn btn-primary"
+                    th:text="${mode=='edit' ? 'Update' : 'Add'}">Add</button>
+            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+            <a href="/employees" class="btn btn-link">Back</a>
+        </div>
+    </form>
+</section>
+</html>

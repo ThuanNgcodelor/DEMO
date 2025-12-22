@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{_layout :: content(~{::section})}">
+<section>
+    <div class="d-flex align-items-center justify-content-between">
+        <h2 class="mb-3">Home</h2>
+        <a class="btn btn-primary" href="/employees/add">Add Employee Details</a>
+    </div>
+    <a href="/employees" class="btn btn-outline-secondary">Go to Employees List</a>
+</section>
+</html>

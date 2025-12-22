@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{_layout :: content(~{::section})}">
+<section>
+    <h2>Employee Details</h2>
+
+    <dl class="row">
+        <dt class="col-sm-3">Emp ID</dt>
+        <dd class="col-sm-9" th:text="${emp.empId}"></dd>
+
+        <dt class="col-sm-3">Name</dt>
+        <dd class="col-sm-9" th:text="${emp.empName}"></dd>
+
+        <dt class="col-sm-3">Phone</dt>
+        <dd class="col-sm-9" th:text="${emp.phone}"></dd>
+
+        <dt class="col-sm-3">Birthday</dt>
+        <dd class="col-sm-9" th:text="${#temporals.format(emp.birthday,'dd/MM/yyyy')}"></dd>
+
+        <dt class="col-sm-3">Salary</dt>
+        <dd class="col-sm-9" th:text="${#numbers.formatDecimal(emp.salary,0,'COMMA',2,'POINT')}"></dd>
+    </dl>
+
+    <div class="d-flex gap-2">
+        <a class="btn btn-outline-secondary" href="/employees">Back</a>
+        <a class="btn btn-primary"
+           th:href="@{'/employees/' + ${emp.empId} + '/edit'}">Edit</a>
+
+        <form th:action="@{'/employees/' + ${emp.empId} + '/delete'}" method="post"
+              onsubmit="return confirm('Delete?')">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+</section>
+</html>

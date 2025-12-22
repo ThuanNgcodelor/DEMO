@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Course Management</title>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<h2>Course Form</h2>
+<form th:action="@{/courses/save}" th:object="${course}" method="post">
+    <div>
+        Course Code: <input type="text" th:field="*{courseCode}" />
+        <span th:if="${#fields.hasErrors('courseCode')}" th:errors="*{courseCode}"></span>
+    </div>
+    <div>
+        Title: <input type="text" th:field="*{title}" />
+        <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+    </div>
+    <div>
+        Credits: <input type="number" th:field="*{credits}" />
+        <span th:if="${#fields.hasErrors('credits')}" th:errors="*{credits}"></span>
+    </div>
+    <div>
+        Instructor: <input type="text" th:field="*{instructor}" />
+        <span th:if="${#fields.hasErrors('instructor')}" th:errors="*{instructor}"></span>
+    </div>
+    <div>
+        Semester: <input type="text" th:field="*{semester}" />
+        <span th:if="${#fields.hasErrors('semester')}" th:errors="*{semester}"></span>
+    </div>
+    <button type="submit">Save</button>
+    <button type="reset">Reset</button>
+</form>
+
+<h3>Course List</h3>
+<table border="1">
+    <tr>
+        <th>Code</th><th>Title</th><th>Credits</th><th>Instructor</th><th>Semester</th><th>Actions</th>
+    </tr>
+    <tr th:each="c : ${list}">
+        <td th:text="${c.courseCode}">Code</td>
+        <td th:text="${c.title}">Title</td>
+        <td th:text="${c.credits}">Credits</td>
+        <td th:text="${c.instructor}">Instructor</td>
+        <td th:text="${c.semester}">Semester</td>
+        <td>
+            <a th:href="@{/courses/edit/{code}(code=${c.courseCode})}">Edit</a> |
+            <a th:href="@{/courses/delete/{code}(code=${c.courseCode})}" 
+               onclick="return confirm('Are you sure?')">Delete</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{_layout :: content(~{::section})}">
+<section>
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h2 class="mb-0">Employees</h2>
+        <a class="btn btn-primary" href="/employees/add">Add</a>
+    </div>
+
+    <form class="row g-2 mb-3" method="get" action="/employees">
+        <div class="col-auto">
+            <input class="form-control" type="text" name="q" th:value="${q}" placeholder="Search by ID/Name/Phone">
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-outline-secondary" type="submit">Find</button>
+        </div>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Emp ID</th><th>Name</th><th>Phone</th><th>Birthday</th>
+            <th class="text-end">Salary (USD)</th><th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="e : ${employees}">
+            <td th:text="${e.empId}"></td>
+            <td th:text="${e.empName}"></td>
+            <td th:text="${e.phone}"></td>
+            <td th:text="${#temporals.format(e.birthday,'dd/MM/yyyy')}"></td>
+            <td class="text-end" th:text="${#numbers.formatDecimal(e.salary,0,'COMMA',2,'POINT')}"></td>
+            <td class="text-nowrap d-flex gap-2">
+                <a class="btn btn-sm btn-outline-primary" th:href="@{'/employees/' + ${e.empId}}">View</a>
+                <a class="btn btn-sm btn-outline-secondary" th:href="@{'/employees/' + ${e.empId} + '/edit'}">Edit</a>
+
+                <form th:action="@{'/employees/' + ${e.empId} + '/delete'}" method="post"
+                      onsubmit="return confirm('Delete?')">
+                    <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+</html>

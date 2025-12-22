@@ -1,0 +1,3 @@
+com\mypack\models\Registrant.class
+com\mypack\repo\InMemoryRegistrantRepo.class
+com\mypack\controller\RegistrantController.class
